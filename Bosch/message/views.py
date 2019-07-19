@@ -1,9 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser, FileUploadParser
 
 class MessageViewSet(viewsets.ViewSet):
-	parser_classes = (FormParser, JSONParser, MultiPartParser)
+	parser_classes = (MultiPartParser,)
 
 	def message(self, request):
 		"""
@@ -12,5 +12,7 @@ class MessageViewSet(viewsets.ViewSet):
 		# Get the cached balance info from database
 		# TODO
 		# serializer = FullWalletSerializer(request.user.investor.wallet)
-		return Response({'msg':'test'})
+		print(request.data)
+		print(request.FILES)
+		return Response({ 'data':'1', 'code':'200', 'message':"xxxxx"})
 
