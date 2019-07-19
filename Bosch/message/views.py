@@ -12,7 +12,7 @@ class MessageViewSet(viewsets.ViewSet):
 		# Get the cached balance info from database
 		# TODO
 		# serializer = FullWalletSerializer(request.user.investor.wallet)
-		print(request.data)
-		print(request.FILES)
-		return Response({ 'data':'1', 'code':'200', 'message':"xxxxx"})
+		print(request.FILES['file'])
+		
+		return Response({ 'data':'1', 'code':'200', 'message':"xxxxx", 'fileName': str(request.FILES['file'])})
 
