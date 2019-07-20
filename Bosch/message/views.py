@@ -2,17 +2,32 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser, FileUploadParser
 
+from models import Message
+from serializers import MessageSerializer
+
 class MessageViewSet(viewsets.ViewSet):
 	parser_classes = (JSONParser,)
 
-	def message(self, request):
-		"""
-		Retrieve user wallet balance info
-		"""
-		# Get the cached balance info from database
-		# TODO
-		# serializer = FullWalletSerializer(request.user.investor.wallet)
-		# if request.data:
-		# 	print(request.data)
-		
+	def predict(self, request):
+		msg = Message(
+			x = request.data.x,
+			y = request.data.y,
+			z = request.data.z,
+			time = request.data.time,
+			label = '')
+		msg.save()
+
+
 		return Response({ 'data':1, 'code':200, 'message':"xxxxx"})
+
+	def reinforce(self, request):
+		time = request.time
+		label = request.label
+
+		msg = Message.objects.get(time=request.time)
+		
+		
+
+	def all(self):
+		serializer = FullCompanyUserSerializer(Message.objects.all(), many=True)
+		return Response(serializer.data, status=status.HTTP_200_OK)

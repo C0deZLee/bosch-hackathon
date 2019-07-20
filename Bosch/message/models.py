@@ -6,8 +6,11 @@ class Message(models.Model):
 	"""
 
 	# Balance Info
-	file = models.FileField(upload_to='~/')
-	result = models.IntegerField(default=0)
+	x = models.TextField()
+	y = models.TextField()
+	z = models.TextField()
+	time = models.TextField()
+	label = models.TextField()
 
 	# TimeStamp
 	created = models.DateTimeField(auto_now_add=True)

@@ -7,6 +7,6 @@ from .models import Message
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
 	# List display Settings
-	list_display = ('id', 'created', 'result')
+	list_display = ('id', 'time')
 	search_fields = ('created',)
 	ordering = ('created',)
