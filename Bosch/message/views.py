@@ -2,8 +2,8 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser, FileUploadParser
 
-from models import Message
-from serializers import MessageSerializer
+from .models import Message
+from .serializers import MessageSerializer
 
 class MessageViewSet(viewsets.ViewSet):
 	parser_classes = (JSONParser,)
@@ -19,13 +19,13 @@ class MessageViewSet(viewsets.ViewSet):
 		
 		# save
 
-		return Response({ 'data': 1, 'code': 200, 'message': "xxxxx"})
+		return Response({ 'data': 1, 'code': 200, 'id': ''})
 
 	def reinforce(self, request):
-		time = request.time
+		id = request.id
 		label = request.label
 
-		msg = Message.objects.get(time=request.time)
+		msg = Message.objects.get(id=id)
 		
 		# call reinforce function
 
