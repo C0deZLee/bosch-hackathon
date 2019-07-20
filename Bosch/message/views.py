@@ -16,9 +16,10 @@ class MessageViewSet(viewsets.ViewSet):
 			time = request.data.time,
 			label = '')
 		msg.save()
+		
+		# save
 
-
-		return Response({ 'data':1, 'code':200, 'message':"xxxxx"})
+		return Response({ 'data': 1, 'code': 200, 'message': "xxxxx"})
 
 	def reinforce(self, request):
 		time = request.time
@@ -26,7 +27,9 @@ class MessageViewSet(viewsets.ViewSet):
 
 		msg = Message.objects.get(time=request.time)
 		
-		
+		# call reinforce function
+
+		return Response(status=status.HTTP_200_OK)
 
 	def all(self):
 		serializer = FullCompanyUserSerializer(Message.objects.all(), many=True)
