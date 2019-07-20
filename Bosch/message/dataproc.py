@@ -8,13 +8,15 @@ label = []
 import random
 import pickle
 
+data_path = "./data/"
+
 
 def increase_data(d, l):
     images.append(d)
     label.append(l)
-    with open('images.pkl', 'wb') as fp:
+    with open(data_path+'images.pkl', 'wb') as fp:
         pickle.dump(images, fp)
-    with open('label.pkl', 'wb') as fp:
+    with open(data_path+'label.pkl', 'wb') as fp:
         pickle.dump(label, fp)
 
 
@@ -24,16 +26,16 @@ def get_data(root):
     if len(images) > 0:
         return images, label
     try:
-        with open('images.pkl', 'rb') as fp:
+        with open(data_path+'images.pkl', 'rb') as fp:
             images = pickle.load(fp)
-        with open('label.pkl', 'rb') as fp:
+        with open(data_path+'label.pkl', 'rb') as fp:
             label = pickle.load(fp)
         return images, label
     except:
         pass
 
     for i in range(10):
-        for p, _, files in os.walk("traindata/" + str(i)):
+        for p, _, files in os.walk(data_path+"traindata/" + str(i)):
             for f in files:
                 data = pd.read_csv(os.path.join(p, f))
                 dt = data.get_values()
@@ -50,9 +52,9 @@ def get_data(root):
     images = np.array(images)[idx]
     label = np.array(label)[idx]
 
-    with open('images.pkl', 'wb') as fp:
+    with open(data_path+'images.pkl', 'wb') as fp:
         pickle.dump(images, fp)
-    with open('label.pkl', 'wb') as fp:
+    with open(data_path+'label.pkl', 'wb') as fp:
         pickle.dump(label, fp)
 
     return images, label
