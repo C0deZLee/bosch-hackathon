@@ -11,10 +11,10 @@ class MessageViewSet(viewsets.ViewSet):
 
 	def predict(self, request):
 		print(request.data)
-		x = request.data["x"]
-		y = request.data["y"]
-		z = request.data["z"]
-		time = request.data["time"]
+		x = request.data["data"]["x"]
+		y = request.data["data"]["y"]
+		z = request.data["data"]["z"]
+		time = request.data["data"]["time"]
 
 		# save
 		# label = predict(x, y, z, time)
