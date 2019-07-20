@@ -3,7 +3,7 @@ from django.urls import path
 from .views import MessageViewSet
 
 predict = MessageViewSet.as_view({
-	'post': 'message',
+	'post': 'predict',
 })
 
 reinforce = MessageViewSet.as_view({
