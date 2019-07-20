@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser, FileUploadParser
 
 class MessageViewSet(viewsets.ViewSet):
-	parser_classes = (MultiPartParser,)
+	parser_classes = (JSONParser,)
 
 	def message(self, request):
 		"""
