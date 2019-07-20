@@ -5,7 +5,9 @@
 
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-
+from vec2img import pts2flatten, pts2image
+import numpy as np
+import pandas as pd
 
 def makePlot(x, y, z):
     fig = plt.figure()
@@ -119,11 +121,6 @@ def csvDataToCoordinates(xDirectionList, yDirectionList, zDirectionList, timeLis
         three_dimensional.append(zPositionList[i])
         result.append(three_dimensional)
     return result
-
-
-from vec2img import pts2flatten, pts2image
-import numpy as np
-import pandas as pd
 
 if __name__ == "__main__":
     data = pd.read_csv("0_4.csv")

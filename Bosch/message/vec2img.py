@@ -1,3 +1,7 @@
+import math
+from PIL import Image
+import numpy as np
+
 # 简化 ： 假设其中一个轴为0
 def getRange(pts, ax):
     mx = pts[0][ax]
@@ -20,9 +24,7 @@ def pts2flatten(pts):
         ret.append([p[rsvi[0]], p[rsvi[1]]])
     return ret
 
-import math
-import numpy as np
-from PIL import Image
+
 size = 100
 def pts2image(pts):
     x_range = [min(pts[:, 0]), max(pts[:, 0])]
@@ -42,17 +44,10 @@ def pts2image(pts):
     img = Image.fromarray(arr, '1')
     img.save('tmp.png')
 
-# import pytesseract
-from PIL import Image
-#
-
-
 #
 def getNumAns(pts):
-    pts
     image = Image.open('tmp.jpg')
     code = pytesseract.image_to_string(image)
     return code
 
 
-import numpy as np
