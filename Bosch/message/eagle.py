@@ -5,9 +5,7 @@
 
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-from vec2img import pts2flatten, pts2image
-import numpy as np
-import pandas as pd
+
 
 def makePlot(x, y, z):
     fig = plt.figure()
@@ -27,11 +25,16 @@ def makePlot(x, y, z):
 fig = plt.figure()
 
 
-def make2dplot(x, y, num=331, show=False):
+def make2dplot(x, y, num=331, show=False, newfig=False):
     fig.add_subplot(num)
-    plt.plot(y, x)
+    plt.scatter(y, x)
     if show:
         plt.show()
+
+def plot2d(x, y):
+    fig = plt.figure()
+    plt.scatter(y, x)
+    fig.show()
 
 
 # Vf = a(Tf-Ti)+Vi
@@ -43,7 +46,7 @@ def convertAccelToSpeed(accelList, timeList):
     if len(accelList) == len(timeList):
         for x in range(1, length):
             timeNow = timeList[x]
-            currentSpeed = 0.5 * (accelList[x] + accelList[x - 1]) * (timeNow - lastTime) + lastSpeed
+            currentSpeed = resultSpeed[x-1] + 0.5 * (accelList[x] + accelList[x - 1]) * (timeNow - lastTime) # + lastSpeed
             resultSpeed[x] = currentSpeed
             lastTime = timeNow
             lastSpeed = currentSpeed
@@ -52,17 +55,18 @@ def convertAccelToSpeed(accelList, timeList):
         raise Exception("Acceleration and Time data list length not the same! Must be same length")
 
 
-width = 16
+width = 8
 threshod = 0.2
 
 
 def acce_filter(accelList):
-    for i in range(len(accelList)):
-        accelList[i] = sum(accelList[i:i + width]) / width
-    for i in range(len(accelList)):
-        if abs(accelList[i]) < threshod:
-            accelList[i] = 0
-    return accelList
+    #for i in range(len(accelList)):
+    #    accelList[i] = sum(accelList[i:i + width]) / width
+    acc = 0
+    ct = 0
+
+    return np.array(accelList)
+#    return accelList
 
 
 ## distance = 1/2(final_speed+initial_speed)*Time
@@ -76,7 +80,7 @@ def convertSpeedToDistance(speedList, timeList):
         for x in range(1, length):
             v_final = speedList[x]
             currentTime = timeList[x]
-            currentPosition = lastPosition + 0.5 * (speedList[x] + speedList[x - 1]) * (currentTime - lastTime)
+            currentPosition = resultDisplacement[x-1] + 0.5 * (speedList[x] + speedList[x - 1]) * (currentTime - lastTime)
             resultDisplacement[x] = currentPosition
             lastTime = currentTime
             lastPosition = currentPosition
@@ -94,6 +98,7 @@ def csvDataToCoordinates(xDirectionList, yDirectionList, zDirectionList, timeLis
     yDirectionList = acce_filter(yDirectionList)
     zDirectionList = acce_filter(zDirectionList)
 
+
     make2dplot(xDirectionList, timeList, 331)
     make2dplot(yDirectionList, timeList, 332)
     make2dplot(zDirectionList, timeList, 333)
@@ -102,17 +107,17 @@ def csvDataToCoordinates(xDirectionList, yDirectionList, zDirectionList, timeLis
     yDirectionList = convertAccelToSpeed(yDirectionList, timeList)
     zDirectionList = convertAccelToSpeed(zDirectionList, timeList)
 
-    make2dplot(xDirectionList, timeList, 334)
-    make2dplot(yDirectionList, timeList, 335)
-    make2dplot(zDirectionList, timeList, 336)
+    #make2dplot(xDirectionList, timeList, 334)
+    #make2dplot(yDirectionList, timeList, 335)
+    #make2dplot(zDirectionList, timeList, 336)
 
     xPositionList = convertSpeedToDistance(xDirectionList, timeList)
     yPositionList = convertSpeedToDistance(yDirectionList, timeList)
     zPositionList = convertSpeedToDistance(zDirectionList, timeList)
 
-    make2dplot(xPositionList, timeList, 337)
-    make2dplot(yPositionList, timeList, 338)
-    make2dplot(zPositionList, timeList, 339,True)
+    #make2dplot(xPositionList, timeList, 337)
+    #make2dplot(yPositionList, timeList, 338)
+    #make2dplot(zPositionList, timeList, 339, True)
     # plot_data.makePlot()
     for i in range(0, length):
         three_dimensional = []
@@ -122,15 +127,19 @@ def csvDataToCoordinates(xDirectionList, yDirectionList, zDirectionList, timeLis
         result.append(three_dimensional)
     return result
 
+
+from vec2img import pts2flatten, pts2image
+import numpy as np
+import pandas as pd
+
 if __name__ == "__main__":
-    data = pd.read_csv("0_4.csv")
+    data = pd.read_csv("O.csv")
     dt = data.get_values()
 
     c = csvDataToCoordinates(dt[:, 0], dt[:, 1], dt[:, 2], dt[:, 3] / (10 ** 9))
     c = np.array(c)
     makePlot(c[:, 0], c[:, 1], c[:, 2])
     c = pts2flatten(c)
-    c = np.array(c)
     pts2image(c)
     make2dplot(c[:, 0], c[:, 1], 111, True)
 
