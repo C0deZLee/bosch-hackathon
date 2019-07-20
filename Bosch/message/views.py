@@ -18,11 +18,12 @@ class MessageViewSet(viewsets.ViewSet):
 		msg.save()
 		
 		# save
+
 		return Response({ 'data': 2, 'code': 200, 'id': msg.id})
 
 	def reinforce(self, request):
-		id = request["id"]
-		label = request["label"]
+		id = request.data["id"]
+		label = request.data["label"]
 
 		msg = Message.objects.get(id=id)
 		
