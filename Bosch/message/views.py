@@ -4,7 +4,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser, File
 
 from .models import Message
 from .serializers import MessageSerializer
-# from .web_itfc import predict, save_data, retrain
+from .web_itfc import predict, save_data, retrain
 
 class MessageViewSet(viewsets.ViewSet):
 	parser_classes = (JSONParser,)
