@@ -10,15 +10,14 @@ class MessageViewSet(viewsets.ViewSet):
 
 	def predict(self, request):
 		msg = Message(
-			x = request.data.x,
-			y = request.data.y,
-			z = request.data.z,
-			time = request.data.time,
+			x = request.data["x"],
+			y = request.data["y"],
+			z = request.data["z"],
+			time = request.data["time"],
 			label = '')
 		msg.save()
 		
 		# save
-
 		return Response({ 'data': 1, 'code': 200, 'id': ''})
 
 	def reinforce(self, request):
