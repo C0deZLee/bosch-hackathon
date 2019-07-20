@@ -9,6 +9,7 @@ import numpy as np
 
 batch_size = 10
 
+data_path = "./data/"
 
 # 定义网络结构
 class CNNnet(torch.nn.Module):
@@ -51,10 +52,10 @@ class CNNnet(torch.nn.Module):
         return x
 
     def save_model(self, name='clf.pkl'):
-        torch.save(self.state_dict(), name)
+        torch.save(self.state_dict(),data_path + name)
 
     def load_model(self, name='clf.pkl'):
-        self.load_state_dict(torch.load(name))
+        self.load_state_dict(torch.load(data_path + name))
 
 
 # 数据
