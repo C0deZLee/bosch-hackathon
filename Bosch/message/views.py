@@ -10,19 +10,18 @@ class MessageViewSet(viewsets.ViewSet):
 	parser_classes = (JSONParser,)
 
 	def predict(self, request):
-		print(request.data)
 		x = request.data["data"]["x"]
 		y = request.data["data"]["y"]
 		z = request.data["data"]["z"]
 		time = request.data["data"]["time"]
 
 		# save
-		# label = predict(x, y, z, time)
-		msg = Message(x = x, y = y, z = z, time = time, label = 'label')
+		label = predict(x, y, z, time)
+		msg = Message(x = x, y = y, z = z, time = time, label = label)
 
 		msg.save()
 
-		return Response({ 'data': 'label', 'code': 200, 'id': msg.id})
+		return Response({ 'data': label, 'code': 200, 'message': '123', 'id': msg.id})
 
 	def reinforce(self, request):
 		id = request.data["id"]
@@ -34,9 +33,8 @@ class MessageViewSet(viewsets.ViewSet):
 
 		serializer = MessageSerializer(msg)
 
-		print(msg.x, msg.y, msg.z, msg.time, label)
 		# call reinforce function
-		# save_data(msg["x"], msg["y"], msg["z"], msg["time"], label)
+		save_data(msg.x, msg.y, msg.z, msg.time, label)
 		return Response(serializer.data, status=status.HTTP_200_OK)
 
 	def all(self, request):
