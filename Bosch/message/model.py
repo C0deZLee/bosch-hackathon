@@ -58,7 +58,7 @@ class CNNnet(torch.nn.Module):
 
 
 # 数据
-from dataproc import get_data, increase_data
+from .dataproc import get_data, increase_data
 
 
 class MyDataset(Dataset):
