@@ -11,6 +11,7 @@ batch_size = 10
 
 data_path = "./data/"
 
+
 # 定义网络结构
 class CNNnet(torch.nn.Module):
     def __init__(self):
@@ -52,7 +53,7 @@ class CNNnet(torch.nn.Module):
         return x
 
     def save_model(self, name='clf.pkl'):
-        torch.save(self.state_dict(),data_path + name)
+        torch.save(self.state_dict(), data_path + name)
 
     def load_model(self, name='clf.pkl'):
         self.load_state_dict(torch.load(data_path + name))
@@ -65,6 +66,11 @@ from .dataproc import get_data, increase_data
 class MyDataset(Dataset):
     def __init__(self, source_data, transforms_=None, mode="train", shuffle=False):
         self.data, self.label = get_data(source_data)
+        print("data num:", len(self.data), "label num:",len(self.label))
+        # print(self.data)
+        if len(self.data) != len(self.label):
+            self.data, self.label = get_data(source_data, True)
+
         if shuffle:
             idx = [i for i in range(len(self.data))]
             self.data = self.data[idx]
@@ -104,10 +110,10 @@ train_dataset = MyDataset(data_path, data_tf, "train", True)
 test_dataset = MyDataset(data_path, data_tf, "test", True)
 train_loader = torch.utils.data.DataLoader(dataset=train_dataset,
                                            batch_size=batch_size,
-                                           shuffle=True)
+                                           shuffle=False)
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=batch_size,
-                                          shuffle=True)
+                                          shuffle=False)
 
 
 def train(model, epoch_num=10):
@@ -170,18 +176,24 @@ try:
 except:
     print("please train model first")
 
-
 ####################
+import torch
+from PIL import Image
+
 
 def predict_one_record(data):
-    dt = test_dataset.transform(data)
+    img = Image.fromarray(np.uint8(data), '1')
+    img.save('tmp.png')
+    dt = test_dataset.transform(img)
+    dt = dt.reshape((1, 1, 28, 28))
     out = model(dt)
     ret = torch.max(out, 1)[1].numpy().tolist()[0]
     return ret
 
-
+import json
 def save_one_record(data, label):
-    increase_data(data, label)
+    increase_data(data, int(label))
+    retrain_model()
 
 
 def retrain_model():

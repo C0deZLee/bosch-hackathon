@@ -60,8 +60,8 @@ threshod = 0.2
 
 
 def acce_filter(accelList):
-    #for i in range(len(accelList)):
-    #    accelList[i] = sum(accelList[i:i + width]) / width
+    for i in range(len(accelList)):
+        accelList[i] = sum(accelList[i:i + width]) / width
     acc = 0
     ct = 0
 

@@ -25,7 +25,11 @@ class MessageViewSet(viewsets.ViewSet):
 
 	def reinforce(self, request):
 		id = request.data["id"]
-		label = request.data["label"]
+		msg = request.data["message"]
+		if msg == 'reset':
+			pass
+
+		label = int(request.data["lable"])
 		
 		msg = Message.objects.get(id=id)
 		msg.label = label
