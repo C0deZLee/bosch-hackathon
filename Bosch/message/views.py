@@ -15,4 +15,4 @@ class MessageViewSet(viewsets.ViewSet):
 		if request.data:
 			print(request.data)
 		
-		return Response({ 'data':'1', 'code':'200', 'message':"xxxxx", 'uploadeData': request.data})
+		return Response({ 'data':1, 'code':200, 'message':"xxxxx", 'uploadeData': request.data})
