@@ -1,6 +1,6 @@
-from model import predict_one_record, save_one_record, retrain_model
-from eagle import csvDataToCoordinates
-from vec2img import pts2flatten, pts2image, pos2mnistlike
+from .model import predict_one_record, save_one_record, retrain_model
+from .eagle import csvDataToCoordinates
+from .vec2img import pts2flatten, pts2image, pos2mnistlike
 
 
 def predict(x, y, z, t):

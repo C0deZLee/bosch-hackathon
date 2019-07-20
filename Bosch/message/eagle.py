@@ -128,7 +128,7 @@ def csvDataToCoordinates(xDirectionList, yDirectionList, zDirectionList, timeLis
     return result
 
 
-from vec2img import pts2flatten, pts2image
+from .vec2img import pts2flatten, pts2image
 import numpy as np
 import pandas as pd
 

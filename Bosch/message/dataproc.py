@@ -1,5 +1,5 @@
-from eagle import *
-from vec2img import *
+from .eagle import *
+from .vec2img import *
 
 import os
 
