@@ -1,4 +1,4 @@
-from model import predict_one_record, save_one_record
+from model import predict_one_record, save_one_record, retrain_model
 from eagle import csvDataToCoordinates
 from vec2img import pts2flatten, pts2image, pos2mnistlike
 
@@ -13,3 +13,7 @@ def predict(x, y, z, t):
 
 def save_data(x, y, z, t, label):
     save_one_record([x, y, z, t], label)
+
+
+def retrain():
+    retrain_model()

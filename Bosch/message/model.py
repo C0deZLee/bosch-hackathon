@@ -184,7 +184,10 @@ def save_one_record(data, label):
 
 
 def retrain_model():
+    global train_dataset
+    train_dataset = MyDataset(data_path, data_tf, "all", True)
     train(model, 1)
+    print("train success")
 
 
 if __name__ == "__main__":
