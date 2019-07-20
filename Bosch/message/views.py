@@ -4,7 +4,7 @@ from rest_framework.parsers import FormParser, JSONParser, MultiPartParser, File
 
 from .models import Message
 from .serializers import MessageSerializer
-from .web_itfc import predict, save_data, retrain
+from .web_itfc import predict, save_data, retrain, reset_model
 
 class MessageViewSet(viewsets.ViewSet):
 	parser_classes = (JSONParser,)
@@ -25,9 +25,10 @@ class MessageViewSet(viewsets.ViewSet):
 
 	def reinforce(self, request):
 		id = request.data["id"]
-		msg = request.data["message"]
-		if msg == 'reset':
-			pass
+		reset = request.data["reset"]
+		if reset == 'true':
+			reset_model()
+			return Response({"msg":"resetted"}, status=status.HTTP_200_OK)
 
 		label = int(request.data["lable"])
 		
