@@ -31,6 +31,7 @@ class MessageViewSet(viewsets.ViewSet):
 
 		return Response(status=status.HTTP_200_OK)
 
-	def all(self):
-		serializer = FullCompanyUserSerializer(Message.objects.all(), many=True)
+	def all(self, request):
+		msgs = Message.objects.all()
+		serializer = FullCompanyUserSerializer(msgs, many=True)
 		return Response(serializer.data, status=status.HTTP_200_OK)
