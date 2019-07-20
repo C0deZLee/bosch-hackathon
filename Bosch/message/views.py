@@ -13,6 +13,6 @@ class MessageViewSet(viewsets.ViewSet):
 		# TODO
 		# serializer = FullWalletSerializer(request.user.investor.wallet)
 		if request.data:
-			print(data)
+			print(request.data)
 		
 		return Response({ 'data':'1', 'code':'200', 'message':"xxxxx", 'uploadeData': request.data})
